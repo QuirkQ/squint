@@ -1,0 +1,6 @@
+/dist/
+/target/
+
+# The global `Icon?` pattern (for macOS folder icons) also matches this
+# directory on case-insensitive filesystems.
+!/src-tauri/icons/

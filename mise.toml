@@ -1,0 +1,41 @@
+[tools]
+# The UI crate compiles to WebAssembly, so the toolchain needs the wasm target
+# alongside the host one.
+rust = { version = "1.98.1", targets = "wasm32-unknown-unknown" }
+"aqua:tauri-apps/tauri/cargo-tauri" = "2.12.1"
+# Spelled out with the github backend on purpose: the short name `trunk` in the
+# mise registry resolves to Trunk.io's linter, not the Rust WASM bundler.
+"github:trunk-rs/trunk" = "0.21.14"
+
+[tasks.dev]
+description = "Run the app with hot reload"
+run = "cargo tauri dev"
+
+[tasks.build]
+description = "Build the release app bundle"
+run = "cargo tauri build"
+
+[tasks.signing-identity]
+description = "Create the local code-signing certificate, once per Mac"
+run = "scripts/create-signing-identity.sh"
+
+[tasks.sandbox]
+description = "Open or close test PRs in your private sandbox repo"
+run = "scripts/sandbox.sh"
+
+[tasks.icons]
+description = "Regenerate the app icons from src-tauri/icons/icon.svg"
+run = [
+  "cargo tauri icon src-tauri/icons/icon.svg",
+  # The generator always writes the mobile sets too; the app is desktop-only.
+  "rm -rf src-tauri/icons/android src-tauri/icons/ios",
+]
+
+[tasks.check]
+description = "Lint and test both crates"
+run = [
+  "cargo fmt --all --check",
+  "cargo clippy --workspace --all-targets -- -D warnings",
+  "cargo clippy -p squint-ui --target wasm32-unknown-unknown -- -D warnings",
+  "cargo test --workspace",
+]

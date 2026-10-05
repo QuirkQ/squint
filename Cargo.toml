@@ -1,0 +1,56 @@
+[package]
+name = "squint-ui"
+version = "0.1.0"
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+leptos = { version = "0.8", features = ["csr"] }
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde-wasm-bindgen = "0.6"
+serde_json = "1"
+console_error_panic_hook = "0.1.7"
+shared = { path = "shared" }
+web-sys = { version = "0.3", features = [
+  "CssStyleDeclaration",
+  "Document",
+  "DomTokenList",
+  "Element",
+  "Event",
+  "EventTarget",
+  "FocusOptions",
+  "HtmlElement",
+  "HtmlInputElement",
+  "HtmlTextAreaElement",
+  "KeyboardEvent",
+  "MouseEvent",
+  "Node",
+  "NodeList",
+  "Range",
+  "ScrollBehavior",
+  "ScrollIntoViewOptions",
+  "ScrollLogicalPosition",
+  "Selection",
+  "Storage",
+  "Window",
+] }
+
+[workspace]
+members = ["src-tauri", "shared"]
+
+# Profiles only take effect at the workspace root; Cargo ignores them in members.
+# Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true
+
+# The UI crate ships as WASM inside the bundle and is compiled on every launch,
+# so optimise it for size (Trunk's wasm-opt pass does the same).
+[profile.release.package.squint-ui]
+opt-level = "z"
