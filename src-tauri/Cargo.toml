@@ -1,0 +1,56 @@
+[package]
+name = "squint"
+version = "0.1.0"
+description = "Review GitHub pull requests across all your repositories"
+authors = ["Quint Pieters"]
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "squint_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+shared = { path = "../shared" }
+# native-tls uses the macOS keychain, so corporate root CAs and proxies just work.
+reqwest = { version = "0.13", default-features = false, features = ["json", "native-tls", "http2", "gzip", "system-proxy"] }
+tokio = { version = "1", features = ["process", "time", "sync", "macros", "io-util", "rt"] }
+thiserror = "2"
+base64 = "0.23"
+# Highlight ranges for grep matches; already in the tree through Tauri.
+regex = "1"
+# Syntax highlighting for the Code tab, the way Zed does it.
+tree-sitter = "0.27"
+tree-sitter-highlight = "0.27"
+tree-sitter-bash = "0.25"
+tree-sitter-css = "0.25"
+tree-sitter-embedded-template = "0.25"
+tree-sitter-go = "0.25"
+tree-sitter-html = "0.23"
+tree-sitter-javascript = "0.25"
+tree-sitter-json = "0.24"
+tree-sitter-md = "0.5"
+tree-sitter-python = "0.25"
+tree-sitter-ruby = "0.23"
+tree-sitter-rust = "0.24"
+tree-sitter-toml-ng = "0.7"
+tree-sitter-typescript = "0.23"
+tree-sitter-yaml = "0.7"
+
+[dev-dependencies]
+tempfile = "3"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# Already in the tree through native-tls; used to keep the token in the Keychain.
+security-framework = "3"

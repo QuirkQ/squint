@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    Squint: an eye narrowed at a diff. The source of every app icon in this
+    directory; regenerate them with `mise run icons`.
+
+    The tile follows the macOS icon grid: an 824 px superellipse (n = 5) centred
+    on the 1024 px canvas, with a drop shadow below it.
+  -->
+  <defs>
+    <path id="tile" d="M924 512 C924 712 928.6 812.7 870.7 870.7 C812.7 928.6 712 924 512 924 C312 924 211.3 928.6 153.3 870.7 C95.4 812.7 100 712 100 512 C100 312 95.4 211.3 153.3 153.3 C211.3 95.4 312 100 512 100 C712 100 812.7 95.4 870.7 153.3 C928.6 211.3 924 312 924 512 Z"/>
+    <path id="eye" d="M214 520 C363 440 661 440 810 520 C661 600 363 600 214 520 Z"/>
+    <clipPath id="tile-clip"><use xlink:href="#tile"/></clipPath>
+    <clipPath id="eye-clip"><use xlink:href="#eye"/></clipPath>
+
+    <linearGradient id="background" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#27272a"/>
+      <stop offset="1" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="sclera" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d4d4d8"/>
+      <stop offset="0.45" stop-color="#fafafa"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0.4" stop-color="#15803d"/>
+      <stop offset="1" stop-color="#4ade80"/>
+    </radialGradient>
+
+    <!-- sRGB, as dark gradients band and shift hue through linearRGB's 8 bits. -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+
+  <use xlink:href="#tile" fill="#000" filter="url(#shadow)"/>
+  <use xlink:href="#tile" fill="url(#background)"/>
+
+  <!-- A diff behind the eye: code, a removed line above, an added line below. -->
+  <g clip-path="url(#tile-clip)">
+    <g fill="#fafafa" fill-opacity="0.11">
+      <rect x="196" y="226" width="270" height="20" rx="10"/>
+      <rect x="236" y="290" width="380" height="20" rx="10"/>
+      <rect x="236" y="738" width="210" height="20" rx="10"/>
+      <rect x="196" y="802" width="110" height="20" rx="10"/>
+    </g>
+    <g fill="#f87171">
+      <rect x="100" y="338" width="824" height="52" fill-opacity="0.13"/>
+      <rect x="236" y="354" width="230" height="20" rx="10" fill-opacity="0.55"/>
+      <rect x="140" y="360" width="34" height="8" rx="4" fill-opacity="0.8"/>
+    </g>
+    <g fill="#4ade80">
+      <rect x="100" y="658" width="824" height="52" fill-opacity="0.13"/>
+      <rect x="236" y="674" width="330" height="20" rx="10" fill-opacity="0.55"/>
+      <rect x="140" y="680" width="34" height="8" rx="4" fill-opacity="0.8"/>
+      <rect x="153" y="667" width="8" height="34" rx="4" fill-opacity="0.8"/>
+    </g>
+  </g>
+  <use xlink:href="#tile" fill="none" stroke="#fff" stroke-opacity="0.08" stroke-width="3"/>
+
+  <!-- The eye: a dark halo lifts it off the diff; the lid tapers to its corners. -->
+  <use xlink:href="#eye" fill="#09090b" fill-opacity="0.7" stroke="#09090b" stroke-opacity="0.7" stroke-width="70" stroke-linejoin="round" filter="url(#soft)"/>
+  <use xlink:href="#eye" fill="url(#sclera)"/>
+  <g clip-path="url(#eye-clip)">
+    <circle cx="512" cy="520" r="120" fill="url(#iris)"/>
+    <circle cx="512" cy="520" r="52" fill="#09090b"/>
+    <circle cx="492" cy="503" r="14" fill="#fafafa"/>
+  </g>
+  <path d="M208 522 C363 440 661 440 816 522 C661 384 363 384 208 522 Z" fill="#fafafa"/>
+</svg>

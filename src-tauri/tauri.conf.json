@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Squint",
+  "version": "0.1.0",
+  "identifier": "com.quintpieters.squint",
+  "build": {
+    "beforeDevCommand": "trunk serve",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "trunk build --release",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Squint",
+        "width": 1500,
+        "height": 940,
+        "minWidth": 1000,
+        "minHeight": 600
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self' 'wasm-unsafe-eval'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' asset: http://asset.localhost data: https://github.com https://*.githubusercontent.com",
+        "connect-src": "'self' ipc: http://ipc.localhost"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "signingIdentity": "Squint Local Signing"
+    }
+  }
+}
